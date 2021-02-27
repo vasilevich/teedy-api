@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "outDir": "./js",
+        "target": "es2020",
+        "module": "commonjs",
+        "rootDir": "./ts",
+        "strict": false,
+        "esModuleInterop": true,
+        "removeComments": false,
+        "declaration": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strictNullChecks": false,
+        "experimentalDecorators": true,
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "include": [
+        "./ts/swagger/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

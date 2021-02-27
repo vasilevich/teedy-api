@@ -1,0 +1,40 @@
+{
+  "name": "teedy-api",
+  "version": "1.0.0",
+  "description": "An unoffical Teedy(https://github.com/sismics/docs) API generated using the source code found at https://github.com/sismics/docs/tree/master/docs-web/src/main/java/com/sismics/docs/rest/resource",
+  "main": "js/swagger/index.js",
+  "typings": "js/swagger/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node --require ts-node/register/transpile-only ts\\build.ts && rimraf -R js && tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vasilevich/teedy-api.git"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.31"
+  },
+  "keywords": [
+    "typescript",
+    "teedy",
+    "sismics",
+    "docs"
+  ],
+  "author": "yosef@doar.systems",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vasilevich/teedy-api/issues"
+  },
+  "homepage": "https://github.com/vasilevich/teedy-api#readme",
+  "dependencies": {
+    "apidoc-swagger-3": "^1.0.6",
+    "intercept-stdout": "^0.1.2",
+    "portable-fetch": "^3.0.0",
+    "rimraf": "^2.6.2",
+    "swagger-nodegen-cli": "^3.0.24",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.2"
+  }
+}
