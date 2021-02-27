@@ -1,8 +1,12 @@
 [![npm version](https://badge.fury.io/js/teedy-api.svg)](https://www.npmjs.com/package/teedy-api)
 
-# Teedy API
+# [Teedy](https://teedy.io) [API](https://demo.teedy.io/apidoc/)
 
-Unofficial Teedy API in form of a node module
+Unofficial [Teedy](https://teedy.io) [API](https://demo.teedy.io/apidoc/) in form of
+a [node module](https://www.npmjs.com/package/teedy-api)
+Teedy is a lightweight document management system packed with alot of amazing features such as OCR, a very useful web-ui
+with tag search and much more. visit their [official website](https://teedy.io)
+or [repo](https://github.com/amanoooo/apidoc-swagger-3) to learn more.
 
 I took
 the [api-docs](https://github.com/sismics/docs/tree/master/docs-web/src/main/java/com/sismics/docs/rest/resource)   
@@ -58,8 +62,22 @@ usersApi.userLoginPost({
     });
 ```
 
+## Credits
+
+[Sismics company](https://github.com/sismics) - for providing such an amazing software as open source.
+
+[Okoyl](https://github.com/Okoyl) - Helped me along the way to plan, find relevant sources and tools to make this module
+possible.
+
 ## License
 
-The license chosen for this project can be found inside package.json: MIT
+The license chosen for this project can be found inside package.json: MIT I do not own any names or trademarks in this
+project. they belong to their respective companies.
 
-Hopefully this module will save you a little of time, have fun and best of luck!
+## Note to Sismics company
+
+you may have this module-name(teedy-api) or ownership of the module/repo at any time.
+contact my email or open an [issue](https://github.com/vasilevich/teedy-api/issues) from your official account.    
+I did not intend to infringe any trademarks.
+
+Hopefully this module will save you some time, have fun and best of luck!
