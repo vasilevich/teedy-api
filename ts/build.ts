@@ -122,6 +122,10 @@ const swaggerTypescriptGenerator = () => mkdirDeleteIfExist(compiledTypescriptOu
             from: new RegExp(escapeRegex('options?: any'), 'g'),
             to: "options?: AxiosRequestConfig & { query?: any }"
         },
+        {
+            from: new RegExp(escapeRegex('url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,'), 'g'),
+            to: "url: options.url || (localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash),"
+        },
     ))
     .then(() => replaceTextInFile(path.resolve(compiledTypescriptOutput, "base.ts"), "import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';", "import axios, { AxiosPromise, AxiosInstance } from 'axios';\nexport const globalAxios = axios;"));
 
