@@ -12,7 +12,7 @@ import rimrafCb from 'rimraf';
 /**
  * Helper functions
  */
-
+const escapeRegex = (string) => string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 const rimraf = util.promisify(rimrafCb);
 const mkdir = util.promisify(fs.mkdir);
 const readFile = util.promisify(fs.readFile);
@@ -103,16 +103,20 @@ const swaggerTypescriptGenerator = () => mkdirDeleteIfExist(compiledTypescriptOu
     .then(() => exec(`npx sc generate -i ${swaggerFile} -l typescript-axios -o ${compiledTypescriptOutput}`))
     .then(() => replaceListOfTextsInDirectory(path.resolve(compiledTypescriptOutput, "apis"),
         {
-            from: new RegExp('basePath: string = BASE_PATH', 'g'),
+            from: new RegExp(escapeRegex('basePath: string = BASE_PATH'), 'g'),
             to: "basePath: string = configuration.basePath"
         },
         {
-            from: new RegExp('import globalAxios, { AxiosPromise, AxiosInstance } from \'axios\';', 'g'),
+            from: new RegExp(escapeRegex('import globalAxios, { AxiosPromise, AxiosInstance } from \'axios\';'), 'g'),
             to: "import globalAxios, {AxiosPromise, AxiosInstance, AxiosRequestConfig} from 'axios';"
         },
         {
-            from: new RegExp('options: any', 'g'),
+            from: new RegExp(escapeRegex('options: any'), 'g'),
             to: "options: AxiosRequestConfig & { query?: any }"
+        },
+        {
+            from: new RegExp(escapeRegex('options?: any'), 'g'),
+            to: "options?: AxiosRequestConfig & { query?: any }"
         },
     ));
 
@@ -134,5 +138,8 @@ const transformTeedyApiToOpenApi = async () => {
     console.log("Done");
 }
 
-transformTeedyApiToOpenApi();
+transformTeedyApiToOpenApi()
+    .catch(e => {
+        console.log("Something went wrong in the build process, open an issue on github or make a pull request with a fix.", e)
+    });
 
