@@ -30,7 +30,7 @@ const readDir = util.promisify(fs.readdir);
 const listAllFilesInDirectory = (inputPath) => readDir(inputPath).then(result => result.map(r => path.resolve(inputPath, r)));
 const exec = util.promisify(execCb as any)
 const mkdirDeleteIfExist = (path) => (rimraf(path).then(() => mkdir(path)));
-const gitClone = (url: string, saveTo: string) => (exec(`git clone ${url}`, {
+const gitClone = (url: string, saveTo: string) => (exec(`git clone --depth=1 ${url}`, {
     stdio: [0, 1, 2], // we need this so node will print the command output
     cwd: saveTo, // path to where you want to save the file
 }));

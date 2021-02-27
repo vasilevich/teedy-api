@@ -89,7 +89,7 @@ var readDir = util.promisify(fs.readdir);
 var listAllFilesInDirectory = function (inputPath) { return readDir(inputPath).then(function (result) { return result.map(function (r) { return path.resolve(inputPath, r); }); }); };
 var exec = util.promisify(child_process_1.exec);
 var mkdirDeleteIfExist = function (path) { return (rimraf(path).then(function () { return mkdir(path); })); };
-var gitClone = function (url, saveTo) { return (exec("git clone " + url, {
+var gitClone = function (url, saveTo) { return (exec("git clone --depth=1 " + url, {
     stdio: [0, 1, 2],
     cwd: saveTo, // path to where you want to save the file
 })); };
