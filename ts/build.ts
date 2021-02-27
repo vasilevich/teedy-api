@@ -108,7 +108,11 @@ const swaggerTypescriptGenerator = () => mkdirDeleteIfExist(compiledTypescriptOu
         },
         {
             from: new RegExp(escapeRegex('import globalAxios, { AxiosPromise, AxiosInstance } from \'axios\';'), 'g'),
-            to: "import globalAxios, {AxiosPromise, AxiosInstance, AxiosRequestConfig} from 'axios';"
+            to: "import {AxiosPromise, AxiosInstance, AxiosRequestConfig} from 'axios';"
+        },
+        {
+            from: new RegExp(escapeRegex('import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from \'../base\';'), 'g'),
+            to: "import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError ,globalAxios} from '../base';"
         },
         {
             from: new RegExp(escapeRegex('options: any'), 'g'),
@@ -118,7 +122,8 @@ const swaggerTypescriptGenerator = () => mkdirDeleteIfExist(compiledTypescriptOu
             from: new RegExp(escapeRegex('options?: any'), 'g'),
             to: "options?: AxiosRequestConfig & { query?: any }"
         },
-    ));
+    ))
+    .then(() => replaceTextInFile(path.resolve(compiledTypescriptOutput, "base.ts"), "import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';", "import axios, { AxiosPromise, AxiosInstance } from 'axios';\nexport const globalAxios = axios;"));
 
 
 const transformTeedyApiToOpenApi = async () => {
@@ -140,6 +145,6 @@ const transformTeedyApiToOpenApi = async () => {
 
 transformTeedyApiToOpenApi()
     .catch(e => {
-        console.log("Something went wrong in the build process, open an issue on github or make a pull request with a fix.", e)
+        console.log("Something went wrong in the build process, remove and install the module again ,if that doesn't help, open an issue on github or make a pull request with a fix.", e)
     });
 
