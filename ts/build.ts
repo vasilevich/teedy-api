@@ -63,20 +63,22 @@ const convertApiDocsToSwagger = async () => {
         const p = swaggerObject.paths[path];
         for (const method in p) {
             const m = p[method];
-            m.parameters.forEach(parameter => {
-                if (!parameter.schema) {
-                    parameter.schema = {
-                        "type": parameter.type,
-                    };
-                }
-            });
+        //    if (m.summary === 'PostUserLogin') {
+                m.parameters.forEach(parameter => {
+                    if (!parameter.schema) {
+                        parameter.schema = {
+                            "type": parameter.type,
+                        };
+                    }
+                });
+           // }
         }
     }
 
     await writeFile(swaggerFile, JSON.stringify(swaggerObject));
 }
 const swaggerTypescriptGenerator = () => mkdirDeleteIfExist(compiledTypescriptOutput)
-    .then(() => exec(`npx sc generate -i ${swaggerFile} -l typescript-fetch -o ${compiledTypescriptOutput}`))
+    .then(() => exec(`npx sc generate -i ${swaggerFile} -l typescript-axios -o ${compiledTypescriptOutput}`))
     .then(() => rimraf(path.resolve(compiledTypescriptOutput, "api_test.spec.ts")));
 
 
