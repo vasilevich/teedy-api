@@ -1,24 +1,35 @@
 import * as util from 'util';
 import * as fs from 'fs';
-import path from 'path';
+import * as path from 'path';
 import {main as apiDocToSwagger} from "apidoc-swagger-3/lib";
 
 import intercept from 'intercept-stdout';
 
-const rimraf = util.promisify(require('rimraf'));
+import {exec as execCb} from 'child_process';
+
+import rimrafCb from 'rimraf';
+
+/**
+ * Helper functions
+ */
+
+const rimraf = util.promisify(rimrafCb);
 const mkdir = util.promisify(fs.mkdir);
+const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
+const performOnFile = (path: string, execute = (fileContent) => fileContent) => readFile(path).then(fileContent => writeFile(path, execute(fileContent)))
+const replaceTextInFile = (path, from: string | RegExp, to: string) => performOnFile(path, (fileContents) => fileContents.toString('utf8').replace(from, to));
+const replaceTextInDirectory = (path, from, to) => listAllFilesInDirectory(path).then(files => Promise.all(files.map(file => replaceTextInFile(file, from, to))));
+const replaceListOfTextsInDirectory = async (path, ...fromToList: { from: string | RegExp, to: string }[]) => {
+    for (const {from, to} of fromToList) {
+        await replaceTextInDirectory(path, from, to);
+    }
+};
 const mv = util.promisify(fs.rename);
-
-const {exec: execCb} = require('child_process');
-const exec = util.promisify(execCb)
+const readDir = util.promisify(fs.readdir);
+const listAllFilesInDirectory = (inputPath) => readDir(inputPath).then(result => result.map(r => path.resolve(inputPath, r)));
+const exec = util.promisify(execCb as any)
 const mkdirDeleteIfExist = (path) => (rimraf(path).then(() => mkdir(path)));
-const tempFolder = path.resolve(__dirname, "../temp");
-const swaggerFile = path.resolve(tempFolder, "swagger.json");
-const sourceFolder = path.resolve(tempFolder, "docs/docs-web/src/main/java/com/sismics/docs/rest/resource");
-const compiledTypescriptOutput = path.resolve(tempFolder, "ts");
-const srcResultFolder = path.resolve(__dirname, "../ts/swagger");
-
 const gitClone = (url: string, saveTo: string) => (exec(`git clone ${url}`, {
     stdio: [0, 1, 2], // we need this so node will print the command output
     cwd: saveTo, // path to where you want to save the file
@@ -34,6 +45,19 @@ intercept(function (txt) {
 });
 const stdOutAllowed = (allowStdout) => options.allowStdout = allowStdout;
 
+
+/**
+ * File and Folder paths
+ */
+const tempFolder = path.resolve(__dirname, "../temp");
+const swaggerFile = path.resolve(tempFolder, "swagger.json");
+const sourceFolder = path.resolve(tempFolder, "docs/docs-web/src/main/java/com/sismics/docs/rest/resource");
+const compiledTypescriptOutput = path.resolve(tempFolder, "ts");
+const srcResultFolder = path.resolve(__dirname, "../ts/swagger");
+
+/**
+ * Execution steps
+ */
 const convertApiDocsToSwagger = async () => {
     await rimraf(swaggerFile);
     stdOutAllowed(false);
@@ -63,23 +87,34 @@ const convertApiDocsToSwagger = async () => {
         const p = swaggerObject.paths[path];
         for (const method in p) {
             const m = p[method];
-        //    if (m.summary === 'PostUserLogin') {
-                m.parameters.forEach(parameter => {
-                    if (!parameter.schema) {
-                        parameter.schema = {
-                            "type": parameter.type,
-                        };
-                    }
-                });
-           // }
+            m.parameters.forEach(parameter => {
+                if (!parameter.schema) {
+                    parameter.schema = {
+                        "type": parameter.type,
+                    };
+                }
+            });
+
         }
     }
-
     await writeFile(swaggerFile, JSON.stringify(swaggerObject));
 }
 const swaggerTypescriptGenerator = () => mkdirDeleteIfExist(compiledTypescriptOutput)
     .then(() => exec(`npx sc generate -i ${swaggerFile} -l typescript-axios -o ${compiledTypescriptOutput}`))
-    .then(() => rimraf(path.resolve(compiledTypescriptOutput, "api_test.spec.ts")));
+    .then(() => replaceListOfTextsInDirectory(path.resolve(compiledTypescriptOutput, "apis"),
+        {
+            from: new RegExp('basePath: string = BASE_PATH', 'g'),
+            to: "basePath: string = configuration.basePath"
+        },
+        {
+            from: new RegExp('import globalAxios, { AxiosPromise, AxiosInstance } from \'axios\';', 'g'),
+            to: "import globalAxios, {AxiosPromise, AxiosInstance, AxiosRequestConfig} from 'axios';"
+        },
+        {
+            from: new RegExp('options: any', 'g'),
+            to: "options: AxiosRequestConfig & { query?: any }"
+        },
+    ));
 
 
 const transformTeedyApiToOpenApi = async () => {

@@ -32,7 +32,6 @@
     "apidoc-swagger-3": "^1.0.6",
     "axios": "^0.21.1",
     "intercept-stdout": "^0.1.2",
-    "portable-fetch": "^3.0.0",
     "rimraf": "^2.6.2",
     "swagger-nodegen-cli": "^3.0.24",
     "ts-node": "^9.1.1",
