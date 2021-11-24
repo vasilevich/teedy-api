@@ -23,8 +23,9 @@ generate typescript-axios source code.
 
 [git](https://git-scm.com/downloads) - in the environment path, used to
 clone [Teedy repo](https://github.com/sismics/docs)   
-[jre or jdk >= 1.7](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html) - in the environment
-path, used to run the official [swagger-codegen-cli.jar](https://github.com/amanoooo/apidoc-swagger-3) tool
+[jre or jdk 8](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html) - in the environment
+path, used to run the official [swagger-codegen-cli.jar](https://github.com/amanoooo/apidoc-swagger-3) tool,
+from my tests , higher than version 8 don't work as far as I know.
 
 ## Usage and examples
 

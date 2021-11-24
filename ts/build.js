@@ -43,6 +43,8 @@ var lib_1 = require("apidoc-swagger-3/lib");
 var intercept_stdout_1 = require("intercept-stdout");
 var child_process_1 = require("child_process");
 var rimraf_1 = require("rimraf");
+var teedyRepo = 'https://github.com/sismics/docs';
+var teedyCommit = 'd98c1bddec454006f185f2e25f94cdd63ae05572';
 /**
  * Helper functions
  */
@@ -89,9 +91,16 @@ var readDir = util.promisify(fs.readdir);
 var listAllFilesInDirectory = function (inputPath) { return readDir(inputPath).then(function (result) { return result.map(function (r) { return path.resolve(inputPath, r); }); }); };
 var exec = util.promisify(child_process_1.exec);
 var mkdirDeleteIfExist = function (path) { return (rimraf(path).then(function () { return mkdir(path); })); };
-var gitClone = function (url, saveTo) { return (exec("git clone --depth=1 " + url, {
+var gitClone = function (url, saveTo, depth) {
+    if (depth === void 0) { depth = 100; }
+    return (exec("git clone --depth=" + depth + " " + url, {
+        stdio: [0, 1, 2],
+        cwd: saveTo, // path to where you want to save the file
+    }));
+};
+var resetToCommit = function (path, sha1) { return (exec("git reset --hard " + sha1, {
     stdio: [0, 1, 2],
-    cwd: saveTo, // path to where you want to save the file
+    cwd: path, // path to where you want to save the file
 })); };
 var options = {
     allowStdout: true,
@@ -107,6 +116,7 @@ var stdOutAllowed = function (allowStdout) { return options.allowStdout = allowS
  * File and Folder paths
  */
 var tempFolder = path.resolve(__dirname, "../temp");
+var tempTeedyRepoFolder = path.resolve(tempFolder, 'docs');
 var swaggerFile = path.resolve(tempFolder, "swagger.json");
 var sourceFolder = path.resolve(tempFolder, "docs/docs-web/src/main/java/com/sismics/docs/rest/resource");
 var compiledTypescriptOutput = path.resolve(tempFolder, "ts");
@@ -193,9 +203,11 @@ var transformTeedyApiToOpenApi = function () { return __awaiter(void 0, void 0, 
             case 1:
                 _a.sent();
                 console.log("Cloning Teedy repo sismics/docs to " + tempFolder + " as docs");
-                return [4 /*yield*/, gitClone("https://github.com/sismics/docs", tempFolder)];
+                return [4 /*yield*/, gitClone(teedyRepo, tempFolder, 1)];
             case 2:
                 _a.sent();
+                //  console.log('Resetting Teedy repo sismics/docs to commit: ');
+                //   await resetToCommit(tempTeedyRepoFolder, teedyCommit);
                 console.log("Generating swagger.json file with apidoc source code from " + sourceFolder);
                 return [4 /*yield*/, convertApiDocsToSwagger()];
             case 3:

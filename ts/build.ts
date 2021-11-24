@@ -2,12 +2,13 @@ import * as util from 'util';
 import * as fs from 'fs';
 import * as path from 'path';
 import {main as apiDocToSwagger} from "apidoc-swagger-3/lib";
-
 import intercept from 'intercept-stdout';
-
 import {exec as execCb} from 'child_process';
-
 import rimrafCb from 'rimraf';
+
+const teedyRepo = 'https://github.com/sismics/docs';
+const teedyCommit = 'd98c1bddec454006f185f2e25f94cdd63ae05572';
+
 
 /**
  * Helper functions
@@ -30,10 +31,17 @@ const readDir = util.promisify(fs.readdir);
 const listAllFilesInDirectory = (inputPath) => readDir(inputPath).then(result => result.map(r => path.resolve(inputPath, r)));
 const exec = util.promisify(execCb as any)
 const mkdirDeleteIfExist = (path) => (rimraf(path).then(() => mkdir(path)));
-const gitClone = (url: string, saveTo: string) => (exec(`git clone --depth=1 ${url}`, {
+const gitClone = (url: string, saveTo: string, depth = 100) => (exec(`git clone --depth=${depth} ${url}`, {
     stdio: [0, 1, 2], // we need this so node will print the command output
     cwd: saveTo, // path to where you want to save the file
 }));
+
+const resetToCommit = (path, sha1) => (exec(`git reset --hard ${sha1}`, {
+    stdio: [0, 1, 2], // we need this so node will print the command output
+    cwd: path, // path to where you want to save the file
+}));
+
+
 const options = {
     allowStdout: true,
 };
@@ -50,6 +58,7 @@ const stdOutAllowed = (allowStdout) => options.allowStdout = allowStdout;
  * File and Folder paths
  */
 const tempFolder = path.resolve(__dirname, "../temp");
+const tempTeedyRepoFolder = path.resolve(tempFolder, 'docs');
 const swaggerFile = path.resolve(tempFolder, "swagger.json");
 const sourceFolder = path.resolve(tempFolder, "docs/docs-web/src/main/java/com/sismics/docs/rest/resource");
 const compiledTypescriptOutput = path.resolve(tempFolder, "ts");
@@ -134,7 +143,9 @@ const transformTeedyApiToOpenApi = async () => {
     console.log(`Creating temp directory at ${tempFolder}`);
     await mkdirDeleteIfExist(tempFolder);
     console.log(`Cloning Teedy repo sismics/docs to ${tempFolder} as docs`);
-    await gitClone("https://github.com/sismics/docs", tempFolder);
+    await gitClone(teedyRepo, tempFolder, 1);
+    //  console.log('Resetting Teedy repo sismics/docs to commit: ');
+    //   await resetToCommit(tempTeedyRepoFolder, teedyCommit);
     console.log(`Generating swagger.json file with apidoc source code from ${sourceFolder}`);
     await convertApiDocsToSwagger();
     console.log(`Generating typescript files from ${swaggerFile}`);
