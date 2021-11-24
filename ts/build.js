@@ -163,7 +163,7 @@ var convertApiDocsToSwagger = function () { return __awaiter(void 0, void 0, voi
     });
 }); };
 var swaggerTypescriptGenerator = function () { return mkdirDeleteIfExist(compiledTypescriptOutput)
-    .then(function () { return exec("npx sc generate -i " + swaggerFile + " -l typescript-axios -o " + compiledTypescriptOutput); })
+    .then(function () { return exec("npx swagger-nodegen-cli@3.0.24 generate -i " + swaggerFile + " -l typescript-axios -o " + compiledTypescriptOutput); })
     .then(function () { return replaceListOfTextsInDirectory(path.resolve(compiledTypescriptOutput, "apis"), {
     from: new RegExp(escapeRegex('basePath: string = BASE_PATH'), 'g'),
     to: "basePath: string = configuration.basePath"

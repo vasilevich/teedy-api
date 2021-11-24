@@ -100,7 +100,7 @@ const convertApiDocsToSwagger = async () => {
     await writeFile(swaggerFile, JSON.stringify(swaggerObject));
 }
 const swaggerTypescriptGenerator = () => mkdirDeleteIfExist(compiledTypescriptOutput)
-    .then(() => exec(`npx sc generate -i ${swaggerFile} -l typescript-axios -o ${compiledTypescriptOutput}`))
+    .then(() => exec(`npx swagger-nodegen-cli@3.0.24 generate -i ${swaggerFile} -l typescript-axios -o ${compiledTypescriptOutput}`))
     .then(() => replaceListOfTextsInDirectory(path.resolve(compiledTypescriptOutput, "apis"),
         {
             from: new RegExp(escapeRegex('basePath: string = BASE_PATH'), 'g'),
