@@ -1,6 +1,6 @@
 {
   "name": "teedy-api",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "An unoffical Teedy(https://github.com/sismics/docs) API generated using the source code found at https://github.com/sismics/docs/tree/master/docs-web/src/main/java/com/sismics/docs/rest/resource",
   "main": "js/swagger/index.js",
   "typings": "js/swagger/index",
