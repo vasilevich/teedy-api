@@ -43,8 +43,8 @@ var lib_1 = require("apidoc-swagger-3/lib");
 var intercept_stdout_1 = require("intercept-stdout");
 var child_process_1 = require("child_process");
 var rimraf_1 = require("rimraf");
-var teedyRepo = 'https://github.com/sismics/docs';
-var teedyCommit = 'd98c1bddec454006f185f2e25f94cdd63ae05572';
+var teedyRepo = 'https://github.com/vasilevich/docs';
+var teedyCommit = '0b7c42e81459543be3b789ab9047f585f4fbc4ab';
 /**
  * Helper functions
  */
@@ -203,29 +203,32 @@ var transformTeedyApiToOpenApi = function () { return __awaiter(void 0, void 0, 
             case 1:
                 _a.sent();
                 console.log("Cloning Teedy repo sismics/docs to " + tempFolder + " as docs");
-                return [4 /*yield*/, gitClone(teedyRepo, tempFolder, 1)];
+                return [4 /*yield*/, gitClone(teedyRepo, tempFolder, 13)];
             case 2:
                 _a.sent();
                 //  console.log('Resetting Teedy repo sismics/docs to commit: ');
-                //   await resetToCommit(tempTeedyRepoFolder, teedyCommit);
+                return [4 /*yield*/, resetToCommit(tempTeedyRepoFolder, teedyCommit)];
+            case 3:
+                //  console.log('Resetting Teedy repo sismics/docs to commit: ');
+                _a.sent();
                 console.log("Generating swagger.json file with apidoc source code from " + sourceFolder);
                 return [4 /*yield*/, convertApiDocsToSwagger()];
-            case 3:
+            case 4:
                 _a.sent();
                 console.log("Generating typescript files from " + swaggerFile);
                 return [4 /*yield*/, swaggerTypescriptGenerator()];
-            case 4:
+            case 5:
                 _a.sent();
                 console.log("Moving results to source");
                 return [4 /*yield*/, rimraf(srcResultFolder)];
-            case 5:
+            case 6:
                 _a.sent();
                 return [4 /*yield*/, mv(compiledTypescriptOutput, srcResultFolder)];
-            case 6:
+            case 7:
                 _a.sent();
                 console.log("Cleaning...");
                 return [4 /*yield*/, rimraf(tempFolder)];
-            case 7:
+            case 8:
                 _a.sent();
                 console.log("Done");
                 return [2 /*return*/];
