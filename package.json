@@ -13,9 +13,6 @@
     "type": "git",
     "url": "git+https://github.com/vasilevich/teedy-api.git"
   },
-  "devDependencies": {
-    "@types/node": "^14.14.31"
-  },
   "keywords": [
     "typescript",
     "teedy",
@@ -29,12 +26,15 @@
   },
   "homepage": "https://github.com/vasilevich/teedy-api#readme",
   "dependencies": {
-    "apidoc-swagger-3": "^1.0.6",
-    "axios": "^0.21.1",
-    "intercept-stdout": "^0.1.2",
-    "rimraf": "^2.6.2",
-    "swagger-nodegen-cli": "^3.0.24",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.2"
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "apidoc-swagger-3": "1.0.6",
+    "intercept-stdout": "0.1.2",
+    "rimraf": "2.6.2",
+    "swagger-nodegen-cli": "3.0.24",
+    "ts-node": "9.1.1",
+    "typescript": "4.2.2"
   }
 }

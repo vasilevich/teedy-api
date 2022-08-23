@@ -28,7 +28,7 @@ apidoc-core@^0.12.0:
     lodash "^4.17.20"
     semver "~7.3.2"
 
-apidoc-swagger-3@^1.0.6:
+apidoc-swagger-3@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/apidoc-swagger-3/-/apidoc-swagger-3-1.0.6.tgz#3bdd7357bdb7debecad33e36b66022bfc36f2c50"
   integrity sha512-qHmMLB4uCEy/qSxPzf21RyZnyTNxekfXJ2ShBjuTd+r79ht51vrRhGWMgw51jHT3vMmdcL3jYFsZbGff2vjhag==
@@ -55,7 +55,7 @@ at-least-node@^1.0.0:
   resolved "https://registry.yarnpkg.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-axios@^0.21.1:
+axios@0.21.1:
   version "0.21.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
   integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
@@ -251,10 +251,10 @@ inherits@^2.0.3, inherits@~2.0.3:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-intercept-stdout@^0.1.2:
+intercept-stdout@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/intercept-stdout/-/intercept-stdout-0.1.2.tgz#126abf1fae6c509a428a98c61a631559042ae9fd"
-  integrity sha1-Emq/H65sUJpCipjGGmMVWQQq6f0=
+  integrity sha512-Umb41Ryp5FzLurfCRAWx+jjNAk8jsw2RTk2XPIwus+86h/Y2Eb4DfOWof/mZ6FBww8SoO45rJSlg25054/Di9w==
   dependencies:
     lodash.toarray "^3.0.0"
 
@@ -425,9 +425,10 @@ readable-stream@^3.4.0:
     string_decoder "^1.1.1"
     util-deprecate "^1.0.1"
 
-rimraf@^2.6.2:
+rimraf@2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
+  integrity sha512-lreewLK/BlghmxtfH36YYVg1i8IAce4TI7oao75I1g245+6BctqTVQiBP3YUJ9C6DQOXJmkYR9X9fCLtCOJc5w==
   dependencies:
     glob "^7.0.5"
 
@@ -492,7 +493,7 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-swagger-nodegen-cli@^3.0.24:
+swagger-nodegen-cli@3.0.24:
   version "3.0.24"
   resolved "https://registry.yarnpkg.com/swagger-nodegen-cli/-/swagger-nodegen-cli-3.0.24.tgz#d57e7e90a8453393072c3e24625d36d04c64075e"
   integrity sha512-+Uz4sF6ggeIo4RSx3Hivdn5QWQl37mkMSUfmEKx0x+NTqN2UlO6qzmjrnxld+4gg/q0O6CJRE+lVAr23CYUjAA==
@@ -507,7 +508,7 @@ triple-beam@^1.2.0, triple-beam@^1.3.0:
   resolved "https://registry.yarnpkg.com/triple-beam/-/triple-beam-1.3.0.tgz#a595214c7298db8339eeeee083e4d10bd8cb8dd9"
   integrity sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==
 
-ts-node@^9.1.1:
+ts-node@9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-9.1.1.tgz#51a9a450a3e959401bda5f004a72d54b936d376d"
   integrity sha512-hPlt7ZACERQGf03M253ytLY3dHbGNGrAq9qIHWUY9XHYl1z7wYngSr3OQ5xmui8o2AaxsONxIzjafLUiWBo1Fg==
@@ -524,7 +525,7 @@ type-of-is@^3.4.0:
   resolved "https://registry.yarnpkg.com/type-of-is/-/type-of-is-3.5.1.tgz#eec2fc89b828dbf9900eb6416eee30f4fe0fcd31"
   integrity sha1-7sL8ibgo2/mQDrZBbu4w9P4PzTE=
 
-typescript@^4.2.2:
+typescript@4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.2.tgz#1450f020618f872db0ea17317d16d8da8ddb8c4c"
   integrity sha512-tbb+NVrLfnsJy3M59lsDgrzWIflR4d4TIUjz+heUnHZwdF7YsrMTKoRERiIvI2lvBG95dfpLxB21WZhys1bgaQ==
