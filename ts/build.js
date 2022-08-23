@@ -44,7 +44,7 @@ var intercept_stdout_1 = require("intercept-stdout");
 var child_process_1 = require("child_process");
 var rimraf_1 = require("rimraf");
 var teedyRepo = 'https://github.com/vasilevich/docs';
-var teedyCommit = '0b7c42e81459543be3b789ab9047f585f4fbc4ab';
+var teedyCommit = 'd98c1bddec454006f185f2e25f94cdd63ae05572';
 /**
  * Helper functions
  */
@@ -203,7 +203,7 @@ var transformTeedyApiToOpenApi = function () { return __awaiter(void 0, void 0, 
             case 1:
                 _a.sent();
                 console.log("Cloning Teedy repo sismics/docs to " + tempFolder + " as docs");
-                return [4 /*yield*/, gitClone(teedyRepo, tempFolder, 13)];
+                return [4 /*yield*/, gitClone(teedyRepo, tempFolder, 30)];
             case 2:
                 _a.sent();
                 //  console.log('Resetting Teedy repo sismics/docs to commit: ');

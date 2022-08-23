@@ -7,7 +7,7 @@ import {exec as execCb} from 'child_process';
 import rimrafCb from 'rimraf';
 
 const teedyRepo = 'https://github.com/vasilevich/docs';
-const teedyCommit = '0b7c42e81459543be3b789ab9047f585f4fbc4ab';
+const teedyCommit = 'd98c1bddec454006f185f2e25f94cdd63ae05572';
 
 
 /**
@@ -143,7 +143,7 @@ const transformTeedyApiToOpenApi = async () => {
     console.log(`Creating temp directory at ${tempFolder}`);
     await mkdirDeleteIfExist(tempFolder);
     console.log(`Cloning Teedy repo sismics/docs to ${tempFolder} as docs`);
-    await gitClone(teedyRepo, tempFolder, 13);
+    await gitClone(teedyRepo, tempFolder, 30);
     //  console.log('Resetting Teedy repo sismics/docs to commit: ');
     await resetToCommit(tempTeedyRepoFolder, teedyCommit);
     console.log(`Generating swagger.json file with apidoc source code from ${sourceFolder}`);
